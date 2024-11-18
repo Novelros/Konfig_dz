@@ -10,14 +10,14 @@ import tarfile
 
 
 class ShellEmulator:
-    def __init__(self, username, fs, fs_arch):
+    def __init__(self, log, fs, fs_arch):
         self.fs_path = fs_arch
-        self.username = username
+        self.log = log
         self.fs = fs
         self.current_dir = '/'  # Начальная директория в виртуальной файловой системе
         self.virtual_files = {}  # Словарь для хранения "виртуальных" файлов и их содержимого
         self.file_timestamps = {}  # Словарь для хранения "временных меток" виртуальных файлов
-        self.log_file = 'log.file.xml'  # Изменено имя файла на log.file.xml
+        self.log_file = log  # Изменено имя файла на log.file.xml
         self.init_log()
 
     def init_log(self):
@@ -27,7 +27,7 @@ class ShellEmulator:
         tree.write(self.log_file)
 
     def prompt(self):
-        return f"{self.username}@emulator:{self.current_dir}$ "
+        return f"{self.log}@emulator:{self.current_dir}$ "
 
     def log_command(self, command, status):
         """Логирование команды в XML файл."""

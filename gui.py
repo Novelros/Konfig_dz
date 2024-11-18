@@ -32,8 +32,8 @@ class ShellGUI:
     def change_background_color(self, color):
         self.text_output.config(bg=color)
 
-def run_gui(username, fs, fs_tar ,start_script):
-    shell = ShellEmulator(username, fs , fs_tar)
+def run_gui(log, fs, fs_tar ,start_script):
+    shell = ShellEmulator(log, fs , fs_tar)
     shell.execute_commands_from_file(start_script)
     gui = ShellGUI(shell)
     gui.change_text_style(12, "Arial")  # Шрифт Arial размером 13
