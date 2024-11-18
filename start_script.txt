@@ -1,0 +1,3 @@
+ls
+cd virtual_fs_archive/ne_tochka/konfig_dz
+uname
