@@ -82,8 +82,22 @@ class ShellEmulator:
             f[len(current_path):] for f in self.virtual_files.keys() if f.startswith(current_path)
         ]
 
+        list_ls_current = set()  # Используем множество для автоматического фильтрации дубликатов
 
-        return '\n'.join(filtered_files + virtual_files_in_dir)
+        # Объединяем отфильтрованные файлы и виртуальные файлы в одном цикле
+        for file in filtered_files + virtual_files_in_dir:
+            # Проверяем наличие символа '/'
+            if '/' in file:
+                prefix = file.split('/')[0]  # Получаем префикс до первого '/'
+                list_ls_current.add(prefix)  # Добавляем префикс
+            else:
+                list_ls_current.add(file)  # Добавляем сам файл, если '/' нет
+
+        # Преобразуем обратно в список, если необходимо
+        list_ls_current = list(list_ls_current)
+
+
+        return '\n'.join(list_ls_current)
 
     def cd(self, directory):
         """Переход в другую директорию (эмуляция)."""
