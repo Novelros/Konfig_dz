@@ -1,4 +1,6 @@
 import unittest
+from unittest.mock import patch
+
 from tar1 import VirtualFileSystem
 from start import ShellEmulator
 
@@ -88,5 +90,30 @@ class TestShellEmulator(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.shell.exit()
 
+        # Тесты для команды uname
+
+    @patch('platform.system', return_value='Windows')
+    @patch('platform.node', return_value='DESKTOP-0DPJS96')
+    @patch('platform.release', return_value='11')
+    @patch('platform.version', return_value='10.0.22631')
+    @patch('platform.machine', return_value='AMD64')
+    @patch('platform.processor', return_value='Intel64 Family 6 Model 154 Stepping 3, GenuineIntel')
+    def test_uname(self, mock_processor, mock_machine, mock_version, mock_release, mock_node, mock_system):
+        result = self.shell.uname()
+
+        # Ожидаемый вывод
+        expected_output = (
+            "Система: Windows\n"
+            "Имя узла: DESKTOP-0DPJS96\n"
+            "Версия: 11\n"
+            "Полная версия: 10.0.22631\n"
+            "Архитектура: AMD64\n"
+            "Процессор: Intel64 Family 6 Model 154 Stepping 3, GenuineIntel"
+        )
+
+        # Сравнение результата с ожидаемым выводом
+        self.assertEqual(result, expected_output)
+
 if __name__ == "__main__":
     unittest.main()
+

@@ -206,7 +206,7 @@ class ShellEmulator:
                       f"Полная версия: {system_info['version']}\n" \
                       f"Архитектура: {system_info['machine']}\n" \
                       f"Процессор: {system_info['processor']}\n"
-
+        #print(info_output.strip())
         return info_output.strip()  # Удаляем лишние пробелы в конце строки
 
     def exit(self):
