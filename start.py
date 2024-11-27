@@ -212,20 +212,37 @@ class ShellEmulator:
     def exit(self):
         sys.exit(0)
 
+    # def execute_commands_from_file(self, file_path):
+    #     """Читает команды из указанного текстового файла и выполняет их."""
+    #     try:
+    #         with open(file_path, 'r') as file:
+    #             for line in file:
+    #                 command = line.strip()
+    #                 if command:  # Игнорируем пустые строки
+    #                     #print(f"Выполнение команды: {command}")
+    #                     self.execute_command(command)
+    #                     #print(a)
+    #     except FileNotFoundError as e:
+    #         print(f"Файл '{file_path}' не найден: {e}")
+    #     except Exception as e:
+    #         print(f"Произошла ошибка при выполнении команд: {e}")
+
     def execute_commands_from_file(self, file_path):
-        """Читает команды из указанного текстового файла и выполняет их."""
-        try:
-            with open(file_path, 'r') as file:
-                for line in file:
-                    command = line.strip()
-                    if command:  # Игнорируем пустые строки
-                        #print(f"Выполнение команды: {command}")
-                        self.execute_command(command)
-                        #print(a)
-        except FileNotFoundError as e:
-            print(f"Файл '{file_path}' не найден: {e}")
-        except Exception as e:
-            print(f"Произошла ошибка при выполнении команд: {e}")
+        # Выполнение скрипта и сбор вывода
+        output = ""
+        if file_path:
+            try:
+                with open(file_path, "r") as script_file:
+                    for line in script_file:
+                        command = line.strip()
+                        if command:  # Пропускаем пустые строки
+                            result = self.execute_command(command)
+                            output += f"{self.prompt()}{command}\n"
+                            if result:
+                                output += f"{result}\n"
+            except FileNotFoundError:
+                output += f"Ошибка: стартовый скрипт '{file_path}' не найден.\n"
+        return output
 
 
 

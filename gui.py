@@ -34,10 +34,15 @@ class ShellGUI:
 
 def run_gui(log, fs, fs_tar ,start_script):
     shell = ShellEmulator(log, fs , fs_tar)
-    shell.execute_commands_from_file(start_script)
+    # shell.execute_commands_from_file(start_script)
+
     gui = ShellGUI(shell)
     gui.change_text_style(12, "Arial")  # Шрифт Arial размером 13
     gui.change_background_color("lightgray")  # Серый цвет фона
+    output = shell.execute_commands_from_file(start_script)
+    if output:
+        gui.text_output.insert(tk.END, f"{output}\n")
+        gui.text_output.see(tk.END)
     gui.start()
 
 
